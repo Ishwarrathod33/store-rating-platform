@@ -1,30 +1,73 @@
 import { Link } from "react-router-dom";
 
 function Navbar() {
+  const token = localStorage.getItem("token");
+
   const logout = () => {
     localStorage.removeItem("token");
     window.location.href = "/";
   };
 
   return (
-    <div
+    <nav
       style={{
+        background: "#2563eb",
+        color: "white",
+        padding: "15px 30px",
         display: "flex",
-        gap: "20px",
-        padding: "15px",
-        borderBottom: "1px solid black",
+        justifyContent: "space-between",
+        alignItems: "center",
       }}
     >
-      <Link to="/">Login</Link>
+      <h2>Store Rating Platform</h2>
 
-      <Link to="/register">Register</Link>
+      <div
+        style={{
+          display: "flex",
+          gap: "20px",
+          alignItems: "center",
+        }}
+      >
+        {!token ? (
+          <>
+            <Link
+              to="/"
+              style={{ color: "white" }}
+            >
+              Login
+            </Link>
 
-      <Link to="/stores">Stores</Link>
+            <Link
+              to="/register"
+              style={{ color: "white" }}
+            >
+              Register
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/stores"
+              style={{ color: "white" }}
+            >
+              Stores
+            </Link>
 
-      <button onClick={logout}>
-        Logout
-      </button>
-    </div>
+            <button
+              onClick={logout}
+              style={{
+                padding: "8px 12px",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            >
+              Logout
+            </button>
+          </>
+        )}
+      </div>
+    </nav>
   );
 }
 

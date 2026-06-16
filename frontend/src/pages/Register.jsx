@@ -26,6 +26,7 @@ function Register() {
       );
 
       alert(response.data.message);
+      window.location.href = "/";
     } catch (error) {
       console.log(error);
       alert("Registration Failed");
@@ -33,52 +34,102 @@ function Register() {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          type="text"
-          name="address"
-          placeholder="Address"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <button type="submit">
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "90vh",
+      }}
+    >
+      <div
+        style={{
+          background: "white",
+          padding: "40px",
+          borderRadius: "10px",
+          boxShadow: "0 0 15px rgba(0,0,0,0.1)",
+          width: "400px",
+        }}
+      >
+        <h1
+          style={{
+            textAlign: "center",
+            marginBottom: "10px",
+            color: "#2563eb",
+          }}
+        >
           Register
-        </button>
-      </form>
+        </h1>
+
+        <p
+          style={{
+            textAlign: "center",
+            color: "#666",
+            marginBottom: "20px",
+          }}
+        >
+          Create your Store Rating account
+        </p>
+
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            onChange={handleChange}
+            style={inputStyle}
+          />
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={handleChange}
+            style={inputStyle}
+          />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+            style={inputStyle}
+          />
+
+          <input
+            type="text"
+            name="address"
+            placeholder="Address"
+            onChange={handleChange}
+            style={inputStyle}
+          />
+
+          <button
+            type="submit"
+            style={{
+              width: "100%",
+              padding: "10px",
+              background: "#2563eb",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              fontSize: "16px",
+            }}
+          >
+            Register
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
+
+const inputStyle = {
+  width: "100%",
+  padding: "10px",
+  marginBottom: "15px",
+  borderRadius: "5px",
+  border: "1px solid #ccc",
+};
 
 export default Register;

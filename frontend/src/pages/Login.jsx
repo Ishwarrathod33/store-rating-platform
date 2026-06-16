@@ -38,32 +38,86 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <button type="submit">
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "90vh",
+      }}
+    >
+      <div
+        style={{
+          background: "white",
+          padding: "40px",
+          borderRadius: "10px",
+          boxShadow: "0 0 15px rgba(0,0,0,0.1)",
+          width: "350px",
+        }}
+      >
+        <h1
+          style={{
+            textAlign: "center",
+            marginBottom: "20px",
+            color: "#2563eb",
+          }}
+        >
           Login
-        </button>
-      </form>
+        </h1>
+        <p
+  style={{
+    textAlign: "center",
+    color: "#666",
+    marginBottom: "20px",
+  }}
+>
+  Rate Stores. Share Experiences.
+</p>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={handleChange}
+            style={{
+              width: "100%",
+              padding: "10px",
+              marginBottom: "15px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+            }}
+          />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+            style={{
+              width: "100%",
+              padding: "10px",
+              marginBottom: "20px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+            }}
+          />
+
+          <button
+            type="submit"
+            style={{
+              width: "100%",
+              padding: "10px",
+              background: "#2563eb",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              fontSize: "16px",
+            }}
+          >
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
