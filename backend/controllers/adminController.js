@@ -1,4 +1,5 @@
 const db = require("../config/db");
+const bcrypt = require("bcryptjs");
 
 // DASHBOARD STATS
 const getDashboardStats = (req, res) => {
@@ -67,7 +68,53 @@ const getAllUsers = (req, res) => {
   });
 };
 
+// ADD USER
+const addUser = async (req, res) => {
+  try {
+    const {
+      name,
+      email,
+      password,
+      address,
+      role,
+    } = req.body;
+
+    const hashedPassword =
+      await bcrypt.hash(password, 10);
+
+    const sql = `
+      INSERT INTO users
+      (name,email,password,address,role)
+      VALUES(?,?,?,?,?)
+    `;
+
+    db.query(
+      sql,
+      [
+        name,
+        email,
+        hashedPassword,
+        address,
+        role,
+      ],
+      (err) => {
+        if (err) {
+          return res.status(500).json(err);
+        }
+
+        res.status(201).json({
+          message:
+            "User Created Successfully",
+        });
+      }
+    );
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 module.exports = {
   getDashboardStats,
   getAllUsers,
+  addUser,
 };

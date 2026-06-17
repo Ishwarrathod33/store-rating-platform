@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 function Login() {
@@ -69,15 +70,17 @@ function Login() {
         >
           Login
         </h1>
+
         <p
-  style={{
-    textAlign: "center",
-    color: "#666",
-    marginBottom: "20px",
-  }}
->
-  Rate Stores. Share Experiences.
-</p>
+          style={{
+            textAlign: "center",
+            color: "#666",
+            marginBottom: "20px",
+          }}
+        >
+          Rate Stores. Share Experiences.
+        </p>
+
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -117,45 +120,48 @@ function Login() {
               border: "none",
               borderRadius: "5px",
               fontSize: "16px",
+              cursor: "pointer",
             }}
           >
             Login
           </button>
-          <p
-  style={{
-    textAlign: "center",
-    marginTop: "15px",
-  }}
->
-  <a
-    href="/forgot-password"
-    style={{
-      color: "#2563eb",
-      textDecoration: "none",
-    }}
-  >
-    Forgot Password?
-  </a>
-</p>
-
-<p
-  style={{
-    textAlign: "center",
-    marginTop: "10px",
-  }}
->
-  Don't have an account?{" "}
-  <a
-    href="/register"
-    style={{
-      color: "#2563eb",
-      textDecoration: "none",
-    }}
-  >
-    Register
-  </a>
-</p>
         </form>
+
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "15px",
+          }}
+        >
+          <Link
+            to="/forgot-password"
+            style={{
+              color: "#2563eb",
+              textDecoration: "none",
+              fontSize: "14px",
+            }}
+          >
+            Forgot Password?
+          </Link>
+        </div>
+
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "15px",
+          }}
+        >
+          Don't have an account?{" "}
+          <Link
+            to="/register"
+            style={{
+              color: "#2563eb",
+              textDecoration: "none",
+            }}
+          >
+            Register
+          </Link>
+        </div>
       </div>
     </div>
   );

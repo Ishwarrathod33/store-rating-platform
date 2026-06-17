@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   getDashboardStats,
   getAllUsers,
+  addUser,
 } = require("../controllers/adminController");
 
 const verifyToken =
@@ -26,6 +27,12 @@ router.get(
   verifyToken,
   adminMiddleware,
   getAllUsers
+);
+router.post(
+  "/users",
+  verifyToken,
+  adminMiddleware,
+  addUser
 );
 
 module.exports = router;

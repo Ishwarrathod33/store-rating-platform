@@ -87,6 +87,15 @@ function Navbar() {
                   Users
                 </Link>
                 <Link
+                    to="/admin-add-user"
+                    style={{
+                      color: "white",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Add User
+                  </Link>
+                <Link
               to="/admin-stores"
               style={{
                 color: "white",
@@ -97,7 +106,17 @@ function Navbar() {
             </Link>
               </>
             )}
-
+            {role === "store_owner" && (
+                <Link
+                  to="/store-owner-dashboard"
+                  style={{
+                    color: "white",
+                    textDecoration: "none",
+                  }}
+                >
+                  Owner Dashboard
+                </Link>
+              )}
             <Link
               to="/change-password"
               style={{

@@ -5,6 +5,7 @@ const {
   registerUser,
   loginUser,
   changePassword,
+  forgotPassword,
 } = require("../controllers/authController");
 
 const verifyToken =
@@ -14,10 +15,12 @@ router.post("/register", registerUser);
 
 router.post("/login", loginUser);
 
-router.put(
-  "/change-password",
+router.put("/change-password",
   verifyToken,
   changePassword
 );
-
+router.put(
+  "/forgot-password",
+  forgotPassword
+);
 module.exports = router;

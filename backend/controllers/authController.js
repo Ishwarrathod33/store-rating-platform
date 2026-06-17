@@ -125,8 +125,46 @@ const changePassword = (req, res) => {
     );
   });
 };
+// FORGOT PASSWORD
+const forgotPassword = (req, res) => {
+  const { email, newPassword } = req.body;
+
+  const sql =
+    "SELECT * FROM users WHERE email = ?";
+
+  db.query(sql, [email], async (err, results) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({
+        message: "User Not Found",
+      });
+    }
+
+    const hashedPassword =
+      await bcrypt.hash(newPassword, 10);
+
+    db.query(
+      "UPDATE users SET password = ? WHERE email = ?",
+      [hashedPassword, email],
+      (err) => {
+        if (err) {
+          return res.status(500).json(err);
+        }
+
+        res.status(200).json({
+          message:
+            "Password Reset Successfully",
+        });
+      }
+    );
+  });
+};
 module.exports = {
   registerUser,
   loginUser,
   changePassword,
+  forgotPassword,
 };
