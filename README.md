@@ -126,9 +126,9 @@ store-rating-platform
 │   └── main.jsx
 │
 │
-|── README.md
 |
-└── screenshots 
+|
+└── README.md
 
 ```
 
