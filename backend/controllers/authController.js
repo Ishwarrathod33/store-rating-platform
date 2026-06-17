@@ -78,8 +78,55 @@ const loginUser = (req, res) => {
     });
   });
 };
+// CHANGE PASSWORD
+const changePassword = (req, res) => {
+  const { currentPassword, newPassword } = req.body;
 
+  const userId = req.user.id;
+
+  const sql = "SELECT * FROM users WHERE id = ?";
+
+  db.query(sql, [userId], async (err, results) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+
+    const user = results[0];
+
+    const match = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+
+    if (!match) {
+      return res.status(400).json({
+        message: "Current Password Incorrect",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(
+      newPassword,
+      10
+    );
+
+    db.query(
+      "UPDATE users SET password = ? WHERE id = ?",
+      [hashedPassword, userId],
+      (err) => {
+        if (err) {
+          return res.status(500).json(err);
+        }
+
+        res.status(200).json({
+          message:
+            "Password Changed Successfully",
+        });
+      }
+    );
+  });
+};
 module.exports = {
   registerUser,
   loginUser,
+  changePassword,
 };

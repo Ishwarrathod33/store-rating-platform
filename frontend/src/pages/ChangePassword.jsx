@@ -1,10 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 
-function Login() {
+function ChangePassword() {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    currentPassword: "",
+    newPassword: "",
   });
 
   const handleChange = (e) => {
@@ -18,27 +18,27 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        formData
+      const token = localStorage.getItem("token");
+
+      const response = await axios.put(
+        "http://localhost:5000/api/auth/change-password",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
-      localStorage.setItem(
-        "token",
-        response.data.token
-      );
+      alert(response.data.message);
 
-      localStorage.setItem(
-        "role",
-        response.data.role
-      );
-
-      alert("Login Successful");
-
-      window.location.href = "/stores";
+      setFormData({
+        currentPassword: "",
+        newPassword: "",
+      });
     } catch (error) {
       console.log(error);
-      alert("Login Failed");
+      alert("Failed to Change Password");
     }
   };
 
@@ -47,63 +47,52 @@ function Login() {
       style={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        minHeight: "90vh",
+        marginTop: "80px",
       }}
     >
       <div
         style={{
           background: "white",
-          padding: "40px",
+          padding: "30px",
           borderRadius: "10px",
           boxShadow: "0 0 15px rgba(0,0,0,0.1)",
-          width: "350px",
+          width: "400px",
         }}
       >
         <h1
           style={{
             textAlign: "center",
-            marginBottom: "20px",
             color: "#2563eb",
           }}
         >
-          Login
+          Change Password
         </h1>
-        <p
-  style={{
-    textAlign: "center",
-    color: "#666",
-    marginBottom: "20px",
-  }}
->
-  Rate Stores. Share Experiences.
-</p>
+
         <form onSubmit={handleSubmit}>
           <input
-            type="email"
-            name="email"
-            placeholder="Email"
+            type="password"
+            name="currentPassword"
+            placeholder="Current Password"
+            value={formData.currentPassword}
             onChange={handleChange}
             style={{
               width: "100%",
               padding: "10px",
+              marginTop: "20px",
               marginBottom: "15px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
             }}
           />
 
           <input
             type="password"
-            name="password"
-            placeholder="Password"
+            name="newPassword"
+            placeholder="New Password"
+            value={formData.newPassword}
             onChange={handleChange}
             style={{
               width: "100%",
               padding: "10px",
               marginBottom: "20px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
             }}
           />
 
@@ -116,49 +105,15 @@ function Login() {
               color: "white",
               border: "none",
               borderRadius: "5px",
-              fontSize: "16px",
+              cursor: "pointer",
             }}
           >
-            Login
+            Change Password
           </button>
-          <p
-  style={{
-    textAlign: "center",
-    marginTop: "15px",
-  }}
->
-  <a
-    href="/forgot-password"
-    style={{
-      color: "#2563eb",
-      textDecoration: "none",
-    }}
-  >
-    Forgot Password?
-  </a>
-</p>
-
-<p
-  style={{
-    textAlign: "center",
-    marginTop: "10px",
-  }}
->
-  Don't have an account?{" "}
-  <a
-    href="/register"
-    style={{
-      color: "#2563eb",
-      textDecoration: "none",
-    }}
-  >
-    Register
-  </a>
-</p>
         </form>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default ChangePassword;

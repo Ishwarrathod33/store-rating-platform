@@ -80,8 +80,26 @@ const updateRating = (req, res) => {
     }
   );
 };
+// GET MY RATINGS
+const getMyRatings = (req, res) => {
+  const userId = req.user.id;
 
+  const sql = `
+    SELECT store_id, rating
+    FROM ratings
+    WHERE user_id = ?
+  `;
+
+  db.query(sql, [userId], (err, results) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+
+    res.status(200).json(results);
+  });
+};
 module.exports = {
   addRating,
   updateRating,
+  getMyRatings,
 };

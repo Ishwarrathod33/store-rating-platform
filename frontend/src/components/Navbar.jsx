@@ -2,9 +2,12 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
+
     window.location.href = "/";
   };
 
@@ -32,14 +35,20 @@ function Navbar() {
           <>
             <Link
               to="/"
-              style={{ color: "white" }}
+              style={{
+                color: "white",
+                textDecoration: "none",
+              }}
             >
               Login
             </Link>
 
             <Link
               to="/register"
-              style={{ color: "white" }}
+              style={{
+                color: "white",
+                textDecoration: "none",
+              }}
             >
               Register
             </Link>
@@ -48,9 +57,55 @@ function Navbar() {
           <>
             <Link
               to="/stores"
-              style={{ color: "white" }}
+              style={{
+                color: "white",
+                textDecoration: "none",
+              }}
             >
               Stores
+            </Link>
+
+            {role === "admin" && (
+              <>
+                <Link
+                  to="/admin-dashboard"
+                  style={{
+                    color: "white",
+                    textDecoration: "none",
+                  }}
+                >
+                  Dashboard
+                </Link>
+
+                <Link
+                  to="/admin-users"
+                  style={{
+                    color: "white",
+                    textDecoration: "none",
+                  }}
+                >
+                  Users
+                </Link>
+                <Link
+              to="/admin-stores"
+              style={{
+                color: "white",
+                textDecoration: "none",
+              }}
+            >
+              Admin Stores
+            </Link>
+              </>
+            )}
+
+            <Link
+              to="/change-password"
+              style={{
+                color: "white",
+                textDecoration: "none",
+              }}
+            >
+              Change Password
             </Link>
 
             <button

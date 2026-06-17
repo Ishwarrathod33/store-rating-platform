@@ -4,23 +4,20 @@ const router = express.Router();
 const {
   addRating,
   updateRating,
+  getMyRatings,
 } = require("../controllers/ratingController");
 
 const verifyToken =
   require("../middleware/authMiddleware");
 
-// ADD RATING
-router.post(
-  "/",
-  verifyToken,
-  addRating
-);
+router.post("/", verifyToken, addRating);
 
-// UPDATE RATING
-router.put(
-  "/:id",
+router.put("/:id", verifyToken, updateRating);
+
+router.get(
+  "/my-ratings",
   verifyToken,
-  updateRating
+  getMyRatings
 );
 
 module.exports = router;

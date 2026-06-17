@@ -6,7 +6,8 @@ function Stores() {
   const [ratings, setRatings] = useState({});
   const [userRating, setUserRating] = useState({});
   const [loading, setLoading] = useState(true);
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const [myRatings, setMyRatings] = useState({});
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -16,6 +17,7 @@ function Stores() {
     }
 
     fetchStores();
+    fetchMyRatings();
   }, []);
 
   const fetchStores = async () => {
@@ -90,11 +92,47 @@ function Stores() {
       }));
 
       fetchAverageRating(storeId);
+      fetchMyRatings();
     } catch (error) {
       console.log(error);
       alert("Failed to Submit Rating");
     }
   };
+  const fetchMyRatings = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const response = await axios.get(
+      "http://localhost:5000/api/ratings/my-ratings",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const ratingsObj = {};
+
+    response.data.forEach((rating) => {
+      ratingsObj[rating.store_id] =
+        rating.rating;
+    });
+
+    setMyRatings(ratingsObj);
+  } catch (error) {
+    console.log(error);
+  }
+};
+  const filteredStores = stores.filter(
+    (store) =>
+      store.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      store.address
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+  );
+
 
   if (loading) {
     return (
@@ -142,11 +180,35 @@ function Stores() {
         style={{
           textAlign: "center",
           color: "#777",
-          marginBottom: "30px",
+          marginBottom: "20px",
         }}
       >
         Total Stores: {stores.length}
       </p>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: "30px",
+        }}
+      >
+        <input
+          type="text"
+          placeholder="🔍 Search by store name or address"
+          value={searchTerm}
+          onChange={(e) =>
+            setSearchTerm(e.target.value)
+          }
+          style={{
+            width: "400px",
+            padding: "12px",
+            borderRadius: "8px",
+            border: "1px solid #ccc",
+            fontSize: "15px",
+          }}
+        />
+      </div>
 
       <div
         style={{
@@ -156,7 +218,7 @@ function Stores() {
           gap: "20px",
         }}
       >
-        {stores.map((store) => (
+        {filteredStores.map((store) => (
           <div
             key={store.id}
             style={{
@@ -189,6 +251,16 @@ function Stores() {
             >
               ⭐ Average Rating:{" "}
               {ratings[store.id] || "No Ratings"}
+            </p>
+            <p
+              style={{
+                marginTop: "5px",
+                color: "#16a34a",
+                fontWeight: "bold",
+              }}
+            >
+              📝 My Rating:{" "}
+              {myRatings[store.id] || "Not Rated"}
             </p>
 
             <input
@@ -227,7 +299,9 @@ function Stores() {
                 cursor: "pointer",
               }}
             >
-              Submit Rating
+              {myRatings[store.id]
+                ? "Update Rating"
+                : "Submit Rating"}
             </button>
           </div>
         ))}
