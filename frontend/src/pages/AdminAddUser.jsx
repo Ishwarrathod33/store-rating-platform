@@ -19,6 +19,32 @@ function AdminAddUser() {
 
   const createUser = async (e) => {
     e.preventDefault();
+    if (
+          formData.name.length < 20 ||
+          formData.name.length > 60
+        ) {
+          alert(
+            "Name must be between 20 and 60 characters"
+          );
+          return;
+        }
+
+        if (formData.address.length > 400) {
+          alert(
+            "Address cannot exceed 400 characters"
+          );
+          return;
+        }
+
+        const passwordRegex =
+          /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,16}$/;
+
+        if (!passwordRegex.test(formData.password)) {
+          alert(
+            "Password must be 8-16 characters and contain at least one uppercase letter and one special character"
+          );
+          return;
+        }
 
     try {
       const token = localStorage.getItem("token");

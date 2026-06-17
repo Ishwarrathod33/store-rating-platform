@@ -25,6 +25,15 @@ function ForgotPassword() {
       alert("Passwords do not match");
       return;
     }
+    const passwordRegex =
+  /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,16}$/;
+
+if (!passwordRegex.test(formData.newPassword)) {
+  alert(
+    "Password must be 8-16 characters and contain at least one uppercase letter and one special character"
+  );
+  return;
+}
 
     try {
       await axios.put(
